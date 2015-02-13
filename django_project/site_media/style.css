@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* CSS Document Author By Rewindme */
+
+/* common */
+body,p,h1,h2,h3,h4,h5,h6,menu,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select{margin:0;padding:0}
+
+body,input,textarea,select,button{font-family:"돋움",Dotum,"굴림",Gulim,Helvetica,'Apple SD Gothic Neo',Sans-serif;font-size:12px}
+select{font-size:12px}
+@-moz-document url-prefix(){select{padding:1px}}
+
+label{cursor:pointer}
+img,fieldset{border:0}
+menu,ul,ol{list-style:none}
+em,address{font-style:normal}
+a,a:link{text-decoration:none}
+a:hover,a:active,a:focus{text-decoration:underline}
+textarea{overflow:auto}
+option,x:-moz-any-link{padding-right:6px}/* for FF */
+option,x:-moz-any-link,x:default{padding-right:0}
+legend{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;visibility:hidden;font-size:0;line-height:0}/* For Screen Reader */
+
+.blind{display:block;overflow:hidden;position:absolute;top:0;left:0;width:0;height:0;border:0;background:none;font-size:0;line-height:0} 
+
+#wrap{
+	padding-top:40px;
+	position:relative;
+}
+
+#nav{
+	position:fixed;
+	top:0;
+	right:0;
+	left:0;
+	height:40px;
+	line-height:40px;	
+	padding:0 10px;
+	border-bottom:1px solid #dedede;
+	background-color:rgba(255,255,255,0.95);
+	box-shadow:0 1px 0 rgba(0,0,0,0.05)
+}
+#nav .private{
+	position:absolute;
+	right:10px;
+	top:0;
+}
+
+#container{
+	padding:10px;
+}
+
+input{display:block}

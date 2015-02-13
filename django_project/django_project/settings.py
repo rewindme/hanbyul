@@ -26,6 +26,13 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEMPLATE_DIRS =(
+    os.path.join(BASE_DIR,'templates'),
+) 
+
+ADMINS = (
+          ('rewindme','reiwnd.me@me.com'),
+          )
 
 # Application definition
 
@@ -36,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bookmarks',
 )
 
 MIDDLEWARE_CLASSES = (

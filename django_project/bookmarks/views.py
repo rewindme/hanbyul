@@ -1,21 +1,69 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*- 
+from django.shortcuts import render, render_to_response
+from django.http import HttpResponse, Http404
+from django.template.loader import get_template
+from django.template import Context
+from django.contrib.auth.models import User
+from django.http.response import HttpResponseRedirect
+from django.contrib.auth import logout
+from django.template import RequestContext
+from bookmarks.forms import *
 
-from django.shortcuts import render
-from django.http import HttpResponse
-
-# Create your views here.
 def main_page(request):
-    output = '''
-        <html>
-        <head><title>%s</title></head>
-        <body>
-            <h1>%s</h1>
-            <p>%s</p>
-        </body>
-        </html>
-    ''' % (
-           '장고|북마크',
-           '장고 북마크에 오신 것을 환영안합니다.',
-           '여기에 북마크를 저장하고 공유할 수 있습니다!'
-           )
-    return HttpResponse(output)
+        
+#     template = get_template('main_page.html')
+#     variables = Context({
+#         'user':request.user
+#     })
+#     
+#     output = template.render(variables)
+#     return HttpResponse(output)
+    bookmarks = ''
+    
+    if request.user.username :
+        us = User.objects.get(username=request.user.username)
+        bookmarks = us.bookmark_set.all()
+        
+    return render_to_response(
+        'main_page.html',RequestContext(request,{'username':request.user.username,'bookmarks':bookmarks})
+    )
+    
+
+def user_page(request,username):
+    try:
+        user = User.objects.get(username=username)
+    except:
+        raise Http404('사용자를 찾을 수 없습니다.')
+    
+    bookmarks = user.bookmark_set.all()
+    
+    template = get_template('user_page.html')
+    variables = RequestContext(request,{
+        'username':username,
+        'bookmarks':bookmarks
+    })
+    
+    return render_to_response('user_page.html',variables)
+
+def logout_page(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+def register_page(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST) 
+        if form.is_valid():
+            user = User.objects.create_user( 
+                username=form.cleaned_data['username'], 
+                password=form.cleaned_data['password1'], 
+                email=form.cleaned_data['email']
+            )
+            return HttpResponseRedirect('/register/success/') 
+    else:
+        form = RegistrationForm()
+    
+    variables = RequestContext(request, {
+        'form': form 
+    })
+    
+    return render_to_response('registration/register.html',variables )

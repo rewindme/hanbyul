@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>장고 북마크 : {% block title %}{% endblock %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/site_media/style.css">
+</head>
+<body>
+<div id="wrap">
+	<div id="nav">
+		<span class="home"><a href="/">home</a></span>
+		<span class="private">
+			{% if user.is_authenticated %}
+				{{ user.username }}님, 안녕하세요.
+				<a href="/user/{{ user.username }}">북마크</a>
+				(<a href="/logout">로그아웃</a>)
+			{% else %}
+				<a href="/login/">로그인</a>
+				<a href="/register/">가입</a>
+			{% endif %}
+		</span>
+	</div>
+	<div id="container">
+		<h1>
+			{% block head %}{% endblock %}
+		</h1>
+		{% block content %}{% endblock %}
+	</div>
+</div>
+</body>
+</html>
